@@ -103,6 +103,41 @@ class Mergesort: Sort {
         }
     }
 }
+
+//readable version
+    func mergeSort(_ array: [Int]) -> [Int] {
+        if array.count <= 1 { return array }
+
+        let tempArray = array
+        let middle = array.count >> 1
+        let leftArray = mergeSort(Array(tempArray[0...middle]))
+        let rightArray = mergeSort(Array(tempArray[middle+1...array.count-1]))
+        return merge2(leftArray, rightArray: rightArray)
+    }
+
+    func merge2(_ leftArray: [Int], rightArray: [Int]) -> [Int] {
+        var tempArray: [Int] = []
+        var left = 0
+        var right = 0
+
+        while left < leftArray.count && right < rightArray.count {
+            if leftArray[left] <= rightArray[right] {
+                tempArray.append(leftArray[left])
+                left += 1
+            } else {
+                tempArray.append(rightArray[right])
+                right += 1
+            }
+        }
+
+        if left == leftArray.count {
+            tempArray += rightArray[right..<rightArray.count]
+        } else {
+            tempArray += leftArray[left..<leftArray.count]
+        }
+
+        return tempArray
+    } 
 ```
 &emsp;&emsp;关于merge操作，我相信，通过开篇问题的讲解，大家在心中大致有一个思路。剩下的就是理解divide操作的实现过程，我们来看divide方法：
 ```
